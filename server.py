@@ -129,17 +129,9 @@ while True: ## this loops over the list of SOCKET CONNECTIONS, if the connection
             # Get user by notified socket, so we will know who sent the message
             user = clients[notified_socket]
             
-            # if user["data"].decode("utf-8") == 'Spain':
-            #     translate = boto3.client(service_name='translate', region_name='us-west-2', use_ssl=True)
-            #     translation = translate.translate_text(Text='thank you very much',SourceLanguageCode='en', TargetLanguageCode='es')
-            #     translation_it = translation['TranslatedText']
 
             print(f'Received message from {user["data"].decode("utf-8")}: {message["data"].decode("utf-8")}')
             #print('type of data received',' ',type(message["data"].decode("utf-8")))
-
-
-
-
 
 
             # Iterate over connected clients and broadcast message
@@ -148,29 +140,7 @@ while True: ## this loops over the list of SOCKET CONNECTIONS, if the connection
                 # But don't sent it to sender
                 if client_socket != notified_socket: ## matching the KEYS
                     send_usr = clients[client_socket] ## retrieving the VALUE for the KEY
-                    print('in loop user',' ',send_usr["data"].decode("utf-8"),' ',message["data"].decode("utf-8"))
-
-                    # if send_usr["data"].decode("utf-8") not in user_lang:
-                    #     translate = boto3.client(service_name='translate', region_name='us-west-2', use_ssl=True)
-                    #     translation = translate.translate_text(Text=message["data"].decode("utf-8"),SourceLanguageCode=lang, TargetLanguageCode='en')
-                    #     translation_it = 'Please respond in your language to get chat in your language.'+' '+translation['TranslatedText']
-                    #     print('first translation is',' ',translation_it)
-                    # else:
-                    #     translate = boto3.client(service_name='translate', region_name='us-west-2', use_ssl=True)
-                    #     translation = translate.translate_text(Text=message["data"].decode("utf-8"),SourceLanguageCode=lang, TargetLanguageCode=user_lang[send_usr["data"].decode("utf-8")])
-                    #     translation_it = translation['TranslatedText']
-                    #     print('translated text is',' ',translation_it)
-
-
-                    # print('checking msg header',' ',message_header.decode('utf-8'))
-                    # print('checking msg header',' ',message_header.decode('utf-8').strip())
-                    # print('checking msg header',' ',int(message_header.decode('utf-8').strip()))
-                    # print('in loop to send message',' ',user['header'],' ',user['data'],' ',message['header'],' ',message["data"])
-                    # Send user and message (both with their headers)
-                    # We are reusing here message header sent by sender, and saved username header send by user when he connected
-
-                    # message["data"] = translation_it.encode('utf-8')
-                    # message['header'] = f"{len(message):<{HEADER_LENGTH}}".encode('utf-8')
+                    print('in loop user',' ',send_usr["data"].decode("utf-8"),' ',message["data"].decode("utf-8")
 
                     client_socket.send(user['header'] + user['data'] + message['header'] + message["data"])
 
