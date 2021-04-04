@@ -101,19 +101,6 @@ while True:
             translation_it = translation['TranslatedText']
             print('translated text is', ' ', translation_it)
 
-            # if username not in user_lang:
-            #     translate = boto3.client(service_name='translate', region_name='us-west-2', use_ssl=True)
-            #     translation = translate.translate_text(Text=message, SourceLanguageCode=lang, TargetLanguageCode='en')
-            #     translation_it = 'Please respond in your language to get chat in your language.' + ' ' + translation[
-            #         'TranslatedText']
-            #     print('first translation is', ' ', translation_it)
-            # else:
-            #     translate = boto3.client(service_name='translate', region_name='us-west-2', use_ssl=True)
-            #     translation = translate.translate_text(Text=message, SourceLanguageCode=lang, TargetLanguageCode=user_lang[username])
-            #     translation_it = translation['TranslatedText']
-            #     print('translated text is', ' ', translation_it)
-         ####################################################################
-
             # Print message
             print(f'{username} > {translation_it}')
 
