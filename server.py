@@ -68,17 +68,7 @@ def receive_message(client_socket):
 
 while True: ## this loops over the list of SOCKET CONNECTIONS, if the connection is server socket then adds it to the list of sockets else retrieves the message from the socket
 
-    # Calls Unix select() system call or Windows select() WinSock call with three parameters:
-    #   - rlist - sockets to be monitored for incoming data
-    #   - wlist - sockets for data to be send to (checks if for example buffers are not full and socket is ready to send some data)
-    #   - xlist - sockets to be monitored for exceptions (we want to monitor all sockets for errors, so we can use rlist)
-    # Returns lists:
-    #   - reading - sockets we received some data on (that way we don't have to check sockets manually)
-    #   - writing - sockets ready for data to be send thru them
-    #   - errors  - sockets with some exceptions
-    # This is a blocking call, code execution will "wait" here and "get" notified in case any action should be taken
     read_sockets, _, exception_sockets = select.select(sockets_list, [], sockets_list)
-
 
     # Iterate over notified sockets , looping over all the estabilished client connections
     for notified_socket in read_sockets:
@@ -123,16 +113,14 @@ while True: ## this loops over the list of SOCKET CONNECTIONS, if the connection
 
                 # Remove from our list of users
                 del clients[notified_socket]
-
+                
                 continue
 
             # Get user by notified socket, so we will know who sent the message
             user = clients[notified_socket]
-            
 
             print(f'Received message from {user["data"].decode("utf-8")}: {message["data"].decode("utf-8")}')
             #print('type of data received',' ',type(message["data"].decode("utf-8")))
-
 
             # Iterate over connected clients and broadcast message
             for client_socket in clients: ## note, the clients is nothing but a dictionary of all the server connection requests i.e. all the connected users and their socker info
@@ -140,7 +128,7 @@ while True: ## this loops over the list of SOCKET CONNECTIONS, if the connection
                 # But don't sent it to sender
                 if client_socket != notified_socket: ## matching the KEYS
                     send_usr = clients[client_socket] ## retrieving the VALUE for the KEY
-                    print('in loop user',' ',send_usr["data"].decode("utf-8"),' ',message["data"].decode("utf-8")
+                    print('in loop user',' ',send_usr["data"].decode("utf-8"),' ',message["data"].decode("utf-8"))
 
                     client_socket.send(user['header'] + user['data'] + message['header'] + message["data"])
 
